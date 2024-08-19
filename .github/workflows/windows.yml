@@ -6,7 +6,7 @@ on:
     inputs:
       cura_conan_version:
         description: 'Cura Conan Version'
-        default: 'cura/latest@ultimaker/testing'
+        default: 'go3d/_@_/_'
         required: true
         type: string
       conan_args:
@@ -39,10 +39,15 @@ on:
         options:
           - self-hosted-Windows-X64
           - windows-2022
-
+          - go3d-machine
+      ref_name:
+        description: 'Git ref (main, 5.7, sha)'
+        required: false
+        default: 'main'
+        type: string
 jobs:
   windows-installer:
-    uses: ultimaker/cura-workflows/.github/workflows/cura-installer-windows.yml@main
+    uses: Go3DInnovation/cura-workflows/.github/workflows/cura-installer-windows.yml@main
     with:
       cura_conan_version: ${{ inputs.cura_conan_version }}
       conan_args: ${{ inputs.conan_args }}
@@ -50,4 +55,6 @@ jobs:
       staging: ${{ inputs.staging }}
       architecture: ${{ inputs.architecture }}
       operating_system: ${{ inputs.operating_system }}
+      ref_name: ${{ inputs.ref_name }}
+
     secrets: inherit
